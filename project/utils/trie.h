@@ -35,7 +35,7 @@ public:
 		if (s[0] == '"')
 			s.erase(s.begin());
 
-		if (s[s.size() - 1] == '.' || s[s.size() - 1] == ',' || s[s.size()-1] == '"')
+		if (s[s.size() - 1] == '.' || s[s.size() - 1] == ',' || s[s.size() - 1] == '"')
 			s.erase(prev(s.end()));
 
 		for (char c : s) {

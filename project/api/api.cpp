@@ -18,7 +18,7 @@
 
 using namespace std;
 
-void initTrie(TrieNode *& root) {
+void initTrie(TrieNode*& root) {
     ios_base::sync_with_stdio(false);
     cin.tie(0);
 
@@ -54,5 +54,13 @@ void initTrie(TrieNode *& root) {
         << std::chrono::duration_cast<std::chrono::milliseconds>(elapsed_time)
         .count()
         << " ms.\n";
-    return ;
+    return;
+}
+
+string getFile(string fileName) {
+    ifstream fi("../data/" + fileName);
+    string content;
+    content.assign(istreambuf_iterator<char>(fi), istreambuf_iterator<char>());
+    fi.close();
+    return content;
 }
