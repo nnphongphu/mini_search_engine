@@ -2,11 +2,14 @@
 #define API_H
 
 #include <string>
-#include "../utils/trie.h"
+#include <map>
+#include <vector>
+#include "../api/trie.h"
 
 using namespace std;
 
-void initTrie(TrieNode *& root);
-string getFile(string fileName);
+void getFiles(vector<string>& files);
+void getFileContent(string& file, string& content);
+void initTrie(vector<string>& files, TrieNode *& root);
 
 #endif

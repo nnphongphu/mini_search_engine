@@ -1,0 +1,69 @@
+#ifndef TRIE_H
+#define TRIE_H
+
+#include <vector>
+#include <string>
+#include <cctype>
+#include <iostream>
+#include <set>
+#include <unordered_map>
+
+using namespace std;
+
+class TrieNode {
+private:
+	const static int N = 256;
+
+public:
+	vector<int> list;
+	TrieNode* child[N];
+
+	TrieNode() {
+		for (int i = 0; i < N; i++)
+			this->child[i] = nullptr;
+	}
+
+	void insert(string &s, const int &fileIndex) {
+		if (s.empty() || s.size() == 1) return;
+
+		TrieNode* tmp = this;
+		for (char& c : s) {
+			if (c < 0 || c >= 256) return;
+			c = tolower(c);
+		}
+
+		for (char c : s) {
+			if (tmp->child[c] == nullptr)
+				tmp->child[c] = new TrieNode();
+			tmp = tmp->child[c];
+		}
+
+		tmp->list.push_back(fileIndex);
+	}
+
+	TrieNode* search(string &s) {
+		TrieNode* tmp = this;
+		for (char c : s) {
+			if (tmp->child[c] == nullptr)
+				return nullptr;
+			tmp = tmp->child[c];
+		}
+		return tmp;
+	}
+
+	vector<int> searchUnique(string s) {
+		TrieNode* tmp = this;
+		for (char c : s) {
+			if (tmp->child[c] == nullptr)
+				return vector<int>();
+			tmp = tmp->child[c];
+		}
+
+		set<int> sans(tmp->list.begin(), tmp->list.end());
+		vector<int> ans(sans.begin(), sans.end());
+		return ans;
+	}
+
+};
+
+#endif TRIE_H

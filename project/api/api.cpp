@@ -1,4 +1,5 @@
-#include "../utils/trie.h"
+#include "../utils/utils.h"
+#include "trie.h"
 #include <algorithm>
 #include <chrono>
 #include <cstddef>
@@ -14,39 +15,52 @@
 #include <map>
 #include <sstream>
 #include <cstdio>
+#include <filesystem>
 
 
 using namespace std;
+namespace fs = std::filesystem;
 
-void initTrie(TrieNode*& root) {
-    ios_base::sync_with_stdio(false);
-    cin.tie(0);
-
-    auto start = std::chrono::steady_clock::now();
-    ifstream fi;
-
-    fi.open("../data/___index.txt");
-    vector< string> files;
-    string fileName;
-    while (getline(fi, fileName)) files.push_back(fileName);
+void getFiles(vector<string> &files) {
+    ifstream fi("../data/___index.txt");
+    string file;
+    while (getline(fi, file))
+        files.push_back(file);
     fi.close();
+}
 
-    int count = 0;
+inline void getFileContent(string& file, string& content) {
+    ifstream fi("../data/" + file);
+    if (fi.is_open() == false) cout << "ERROR\n";
+    fi.seekg(0, std::ios::end);
+    content.reserve(fi.tellg());
+    fi.seekg(0, std::ios::beg);
+    content.assign(istreambuf_iterator<char>(fi), istreambuf_iterator<char>());
+}
+
+void initTrie(vector<string>& files, TrieNode*& root) {
+    auto start = std::chrono::steady_clock::now();
+ 
+    ifstream fi;
+    int fileIndex = 0;
     for (string file : files) {
         fi.open("../data/" + file);
 
-        if (fi.is_open()) {
-            string word;
-            int index = 0;
-            while (fi >> word) {
-                root->insert(word, file, index);
-                index += 1;
-            }
+        if (fi) {
+            string content;
+            getFileContent(file, content);
+
+            vector<string> token;
+            tokenize(content, token);
+            
+            for (string tok : token)
+                root->insert(tok, fileIndex);
         }
 
         fi.close();
-        if (count == 100) break;
-        count++;
+
+        if (fileIndex - 100 == 0) break;
+        fileIndex += 1;
     }
 
     auto elapsed_time = std::chrono::steady_clock::now() - start;
@@ -55,12 +69,4 @@ void initTrie(TrieNode*& root) {
         .count()
         << " ms.\n";
     return;
-}
-
-string getFile(string fileName) {
-    ifstream fi("../data/" + fileName);
-    string content;
-    content.assign(istreambuf_iterator<char>(fi), istreambuf_iterator<char>());
-    fi.close();
-    return content;
 }

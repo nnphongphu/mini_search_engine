@@ -1,44 +1,43 @@
 #define _HAS_STD_BYTE 0
 #include <iostream>
-#include "utils/trie.h"
+#include "api/trie.h"
 #include <windows.h>
 #include "api/api.h"
+#include "utils/utils.h"
 
 using namespace std;
 
 int main() {
 	ios_base::sync_with_stdio(false);
 	cin.tie(0);
+
+	vector<string> files;
+	getFiles(files);
+
 	TrieNode* root = new TrieNode();
-	initTrie(root);
+	initTrie(files, root);
+
 	cout << "--------- FINISHED INITIALIZING ---------\n";
 	cout << "--------- WELCOME TO OUR SEARCH ---------\n";
+
 	while (true) {
 		cout << "Enter what you want to search: ";
-		string s; cin >> s;
+		string query;
+		getline(cin, query);
 		
-		int count = 0;
-		TrieNode* node = root->search(s);
-		cout << "The word " << s << " appears in " << node->list.size() << " documents. Here are the top five:\n";
-		for (auto doc : node->list) {
-			cout << "Filename: " << doc.first << "\n";
-			cout << "Content: ...";
-			string content = getFile(doc.first);
-			int position = (int)content.find(s);
-			for (int i = max(position - 150, 0); i < position; i++) {
-				cout << content[i];
-			}
+		vector<int> list = queryExecution(query, root, files);
 
-			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 2);
-			cout << s;
-			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
+		int count = 1;
+		for (int id : list) {
 
-			for (auto i = position+s.size(); i < min(position+150, (int)content.size()); i++) {
-				cout << content[i];
-			}
-			cout << "...\n";
+			string file = files[id];
+			string content;
+			getFileContent(file, content);
+			string title = getTitle(file);
 
-			cout << "----------------------------------------\n";
+			cout << "Filename: " << file << "\n";
+			cout << "Title: " << title << "\n";
+
 			count += 1;
 			if (count == 5) break;
 		}
