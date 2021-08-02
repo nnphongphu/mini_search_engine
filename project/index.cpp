@@ -5,6 +5,7 @@
 #include "api/api.h"
 #include "utils/utils.h"
 #include "utils/front_end.cpp"
+#include "utils/history.h"
 
 using namespace std;
 
@@ -25,6 +26,9 @@ int main() {
 		cout << "Enter what you want to search: ";
 		string query;
 		getline(cin, query);
+
+		History history;
+		query = history.history(query);
 		
 		vector<int> list = queryExecution(query, root, files);
 
