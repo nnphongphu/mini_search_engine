@@ -52,9 +52,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="utils\synonym.txt" />
-    <Text Include="utils\history.txt" />
     <Text Include="history.txt" />
+    <Text Include="stopwords.txt" />
+    <Text Include="synonym.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

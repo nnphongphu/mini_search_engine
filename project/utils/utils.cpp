@@ -2,6 +2,7 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
+#include <algorithm>
 #include "../api/api.h"
 #include "utils.h"
 
@@ -72,4 +73,8 @@ vector<int> getPos(string& fileName, string& key) {
 		if (token[i] == key) pos.push_back(i);
 
 	return pos;
+}
+
+bool isStopword(string& word, vector<string>& stopwords) {
+	return binary_search(stopwords.begin(), stopwords.end(), word);
 }

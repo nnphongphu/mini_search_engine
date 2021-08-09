@@ -87,8 +87,8 @@ public:
 			}
 			fin.close();
 			if (!isInFile) { // If it's in file, update file history.
-				fout.open("history.txt", ios::app);
-				fout << s << endl;
+				fout.open("history.txt", std::ios::app);
+				fout << s << std::endl;
 				fout.close();
 			}
 		}

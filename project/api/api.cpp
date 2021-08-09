@@ -53,8 +53,9 @@ void initTrie(vector<string>& files, TrieNode*& root) {
             vector<string> token;
             tokenize(content, token);
             
-            for (string tok : token)
+            for (string tok : token) {
                 root->insert(tok, fileIndex);
+            }
         }
 
         fi.close();
@@ -69,4 +70,13 @@ void initTrie(vector<string>& files, TrieNode*& root) {
         .count()
         << " ms.\n";
     return;
+}
+
+vector<string> getStopwords() {
+    vector<string> ans;
+    ifstream fi("stopwords.txt");
+    string tmp;
+    while (fi >> tmp) ans.push_back(tmp);
+    sort(ans.begin(), ans.end());
+    return ans;
 }
