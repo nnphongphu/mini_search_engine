@@ -6,6 +6,7 @@
 #include "utils/utils.h"
 #include "utils/front_end.cpp"
 #include "utils/history.h"
+#include "utils/highlight.cpp"
 
 using namespace std;
 
@@ -54,9 +55,9 @@ int main() {
 		int result = front_end(fileList, { 0, 6 });
 
 		system("CLS");
-		if (result != fileList.size()) continue;
+		if (result == fileList.size()) continue;
 		else {
-			// print file
+			// highlight() parameter is a string which is file we print out, and a vector<string> which is list of keywords.
 		}
 	}
 
