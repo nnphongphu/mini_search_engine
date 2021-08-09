@@ -143,14 +143,19 @@
     <ClCompile Include="api\api.cpp" />
     <ClCompile Include="index.cpp" />
     <ClCompile Include="utils\executioner.cpp" />
+    <ClCompile Include="utils\front_end.cpp" />
+    <ClCompile Include="utils\highlight.cpp" />
     <ClCompile Include="utils\utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="api\api.h" />
+    <ClInclude Include="utils\history.h" />
     <ClInclude Include="utils\utils.h" />
     <ClInclude Include="api\trie.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="history.txt" />
+    <Text Include="utils\history.txt" />
     <Text Include="utils\synonym.txt" />
   </ItemGroup>
   <ItemGroup>

@@ -6,10 +6,8 @@
 #include <vector>
 #include "../api/trie.h"
 
-using namespace std;
-
-void getFiles(vector<string>& files);
-void getFileContent(string& file, string& content);
-void initTrie(vector<string>& files, TrieNode *& root);
+void getFiles(std::vector<std::string>& files);
+void getFileContent(std::string& file, std::string& content);
+void initTrie(std::vector<std::string>& files, TrieNode *& root);
 
 #endif

@@ -6,17 +6,15 @@
 #include <vector>
 #include <string>
 
-using namespace std;
-
 class History {
 private:
-	ofstream fout;
-	ifstream fin;
-	fstream f;
+	std::ofstream fout;
+	std::ifstream fin;
+	std::fstream f;
 
 public:
-	vector<string> getHistory(string s) {
-		vector<string> res;
+	std::vector<std::string> getHistory(std::string s) {
+		std::vector<std::string> res;
 		res.push_back(s);
 		
 		int i = 1;
@@ -24,42 +22,42 @@ public:
 
 		if (fin.is_open()) {
 			while (!fin.eof()) {
-				string temp; getline(fin, temp);
+				std::string temp; getline(fin, temp);
 				if (temp == "" || temp == s || temp.find(s) == -1) continue;
 
-				cout << i++ << ". " << temp << endl;
+				std::cout << i++ << ". " << temp << std::endl;
 				res.push_back(temp);
 			}
 		}
 		fin.close();
 
-		fout.open("history.txt", ios::app);
-		if(fout.is_open()) fout << s << endl;
+		fout.open("history.txt", std::ios::app);
+		if(fout.is_open()) fout << s << std::endl;
 		fout.close();
 
 		return res;
 	};
 
 	void clearHistory() {
-		f.open("history.txt", ios::out | ios::trunc);
+		f.open("history.txt", std::ios::out | std::ios::trunc);
 		f.close();
 	};
 
-	string history(string s) {
+	std::string history(std::string s) {
 		int choice;
-		cout << "0. Search" << endl << "1. Show history suggestion" << endl << "OPTION:   ";
-		cin >> choice; cin.ignore();
+		std::cout << "0. Search" << std::endl << "1. Show history suggestion" << std::endl << "OPTION:   ";
+		std::cin >> choice; std::cin.ignore();
 		if (choice) {
-			vector<string> res = getHistory(s);
-			cin >> choice; cin.ignore();
+			std::vector<std::string> res = getHistory(s);
+			std::cin >> choice; std::cin.ignore();
 			if (choice > res.size() - 1) {
-				cout << "Invalid" << endl; choice = 0;
+				std::cout << "Invalid" << std::endl; choice = 0;
 			}
-			s = res[choice - 1];
+			s = res[(std::size_t)choice - 1];
 		}
 		else {
-			fout.open("history.txt", ios::app);
-			fout << s << endl;
+			fout.open("history.txt", std::ios::app);
+			fout << s << std::endl;
 			fout.close();
 		}
 		return s;

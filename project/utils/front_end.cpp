@@ -3,10 +3,10 @@
 #include <utility>
 #include <conio.h>
 #include <windows.h>
+#include "utils.h"
+
 
 using namespace std;
-
-enum ACTION { UP, DOWN, RIGHT, ENTER, BACK };
 
 void ShowConsoleCursor(bool showFlag)
 {
@@ -63,11 +63,11 @@ int front_end(vector<pair<string, string>> fileList, COORD position) {
             cout << status + 1 << ". Filename: " << fileList[status].first << " - Title: " << fileList[status].second;
 
             if (action == UP) {
-                if (!status) status = fileList.size() - 1;
+                if (!status) status = (int)fileList.size() - 1;
                 else status--;
             }
             else if (action == DOWN) {
-                if (status == fileList.size() - 1) status = 0;
+                if (status == (int)fileList.size() - 1) status = 0;
                 else status++;
             }
             break;

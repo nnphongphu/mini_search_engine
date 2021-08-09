@@ -8,14 +8,12 @@
 #include <set>
 #include <unordered_map>
 
-using namespace std;
-
 class TrieNode {
 private:
 	const static int N = 256;
 
 public:
-	vector<int> list;
+	std::vector<int> list;
 	TrieNode* child[N];
 
 	TrieNode() {
@@ -23,7 +21,7 @@ public:
 			this->child[i] = nullptr;
 	}
 
-	void insert(string &s, const int &fileIndex) {
+	void insert(std::string &s, const int &fileIndex) {
 		if (s.empty() || s.size() == 1) return;
 
 		TrieNode* tmp = this;
@@ -41,7 +39,7 @@ public:
 		tmp->list.push_back(fileIndex);
 	}
 
-	TrieNode* search(string &s) {
+	TrieNode* search(std::string &s) {
 		TrieNode* tmp = this;
 		for (char c : s) {
 			if (tmp->child[c] == nullptr)
@@ -51,16 +49,16 @@ public:
 		return tmp;
 	}
 
-	vector<int> searchUnique(string s) {
+	std::vector<int> searchUnique(std::string s) {
 		TrieNode* tmp = this;
 		for (char c : s) {
 			if (tmp->child[c] == nullptr)
-				return vector<int>();
+				return std::vector<int>();
 			tmp = tmp->child[c];
 		}
 
-		set<int> sans(tmp->list.begin(), tmp->list.end());
-		vector<int> ans(sans.begin(), sans.end());
+		std::set<int> sans(tmp->list.begin(), tmp->list.end());
+		std::vector<int> ans(sans.begin(), sans.end());
 		return ans;
 	}
 

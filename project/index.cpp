@@ -4,11 +4,11 @@
 #include <windows.h>
 #include "api/api.h"
 #include "utils/utils.h"
-#include "utils/front_end.cpp"
 #include "utils/history.h"
-#include "utils/highlight.cpp"
 
 using namespace std;
+
+History temp;
 
 int main() {
 	ios_base::sync_with_stdio(false);
@@ -50,7 +50,7 @@ int main() {
 			if (count == 5) break;
 		}
 		
-		cout << "Below are top 5 results, please choose file you want to see (press BACK to find another world).\n";
+		cout << "Below are top 5 results, please choose file you want to see (press BACK to find another word).\n";
 
 		int result = front_end(fileList, { 0, 6 });
 

@@ -30,6 +30,12 @@
     <ClCompile Include="utils\utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="utils\front_end.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\highlight.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="api\api.h">
@@ -41,9 +47,14 @@
     <ClInclude Include="api\trie.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="utils\history.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="utils\synonym.txt" />
+    <Text Include="utils\history.txt" />
+    <Text Include="history.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
