@@ -37,21 +37,17 @@ int main() {
 		vector<string> highlights;
 		tie(list, highlights) = queryExecution(query, root, files, stopwords);
 
-		int count = 1;
-		
+		vector<string> listFile = getTopFive(files, query);
 		vector<pair<string, string>> fileList;
 
-		for (int id : list) {
+		for (string f : listFile) {
 
-			string file = files[id];
+			string file = f;
 			string content;
 			getFileContent(file, content);
 			string title = getTitle(file);
 
 			fileList.push_back({ file, title });
-
-			count += 1;
-			if (count == 5) break;
 		}
 		
 		cout << "Below are top 5 results, please choose file you want to see (press BACK to find another word).\n";
