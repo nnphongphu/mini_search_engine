@@ -2,6 +2,7 @@
 #include <iostream>
 #include "api/trie.h"
 #include <windows.h>
+#include <utility>
 #include "api/api.h"
 #include "utils/utils.h"
 #include "utils/history.h"
@@ -20,6 +21,7 @@ int main() {
 	TrieNode* root = new TrieNode();
 	initTrie(files, root);
 	
+	vector<string> stopwords = getStopwords();
 	while (true) {
 		cout << "--------- FINISHED INITIALIZING ---------\n";
 		cout << "--------- WELCOME TO OUR SEARCH ---------\n";
@@ -31,7 +33,9 @@ int main() {
 		History history;
 		query = history.history(query);
 		
-		vector<int> list = queryExecution(query, root, files);
+		vector<int> list;
+		vector<string> highlights;
+		tie(list, highlights) = queryExecution(query, root, files, stopwords);
 
 		int count = 1;
 		

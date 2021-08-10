@@ -4,6 +4,7 @@
 #include <vector>
 #include <iostream>
 #include <utility>
+#include <algorithm>
 #include "../api/api.h"
 #include "../api/trie.h"
 
@@ -79,11 +80,12 @@ void updateCandidatesAndPositionInExactQuery(vpv &position, vector<int> &candida
 	candidates = updatedCandidates;
 }
 
-vector<int> queryExecution(string &query, TrieNode *& root, vector<string> &files) {
+pair<vector<int>, vector<string>> queryExecution(string &query, TrieNode *& root, vector<string> &files, vector<string>& stopwords) {
 	stringstream ss(query);
 	string tmp;
 
 	vector<int> candidates;
+	vector<string> highlights;
 	bool firstTerm = true;
 	while (ss >> tmp) {
 		vector<int> searchAns;
@@ -92,7 +94,9 @@ vector<int> queryExecution(string &query, TrieNode *& root, vector<string> &file
 				tmp = tmp.substr(1, tmp.size() - 2);
 				if (tmp == "*") continue;
 
+				transform(tmp.begin(), tmp.end(), tmp.begin(), [](char c) { return std::tolower(c); });
 				searchAns = root->searchUnique(tmp);
+				highlights.push_back(tmp);
 				intersect(candidates, searchAns);
 				continue;
 			}
@@ -114,6 +118,7 @@ vector<int> queryExecution(string &query, TrieNode *& root, vector<string> &file
 
 			int delta = 1;
 			while (ss >> tmp) {
+				transform(tmp.begin(), tmp.end(), tmp.begin(), [](char c) { return std::tolower(c); });
 				bool isFinalTerm = false;
 
 				if (tmp.back() == '"') {
@@ -123,6 +128,7 @@ vector<int> queryExecution(string &query, TrieNode *& root, vector<string> &file
 
 				if (tmp == "*") delta += 1;
 				else {
+					highlights.push_back(tmp);
 					searchAns = root->searchUnique(tmp);
 					vector< pair<int, vector<int>> > newPosition;
 					for (auto fileId : searchAns)
@@ -139,6 +145,8 @@ vector<int> queryExecution(string &query, TrieNode *& root, vector<string> &file
 
 		if (tmp.substr(0, 8) == "intitle:") {
 			string required = tmp.substr(8);
+			transform(required.begin(), required.end(), required.begin(), [](char c) { return std::tolower(c); });
+			highlights.push_back(required);
 			searchAns = root->searchUnique(required);
 			searchAns = getInTitleFile(required, searchAns, files);
 			if (firstTerm) {
@@ -147,28 +155,66 @@ vector<int> queryExecution(string &query, TrieNode *& root, vector<string> &file
 			} else intersect(candidates, searchAns);
 			continue;
 		}
-		
-		if (tmp == "OR" || firstTerm) {
-			if (firstTerm == false) ss >> tmp;
+
+		if (tmp[0] == '~') {
+			tmp = tmp.substr(1, tmp.size() - 1);
+			transform(tmp.begin(), tmp.end(), tmp.begin(), [](char c) { return std::tolower(c); });
+			vector<string> synonyms = getSyno(tmp);
+			vector<int> searchAns = root->searchUnique(tmp);
+			highlights.push_back(tmp);
+			for (string term : synonyms) {
+				vector<int> subAns = root->searchUnique(tmp);
+				unite(searchAns, subAns);
+				highlights.push_back(term);
+			}
+			if (firstTerm) unite(candidates, searchAns);
+			else  intersect(candidates, searchAns);
+
 			firstTerm = false;
+			continue;
+		}
+
+		if (tmp.substr(0, 9) == "filetype:") {
+			tmp = tmp.substr(9, tmp.size() - 9);
+			transform(tmp.begin(), tmp.end(), tmp.begin(), [](char c) { return std::tolower(c); });
+			if (tmp == "txt") continue;
+			else {
+				candidates.clear();
+				break;
+			}
+		}
+		
+		if (tmp == "OR" && firstTerm == false) {
+			ss >> tmp;
+			transform(tmp.begin(), tmp.end(), tmp.begin(), [](char c) { return std::tolower(c); });
+			highlights.push_back(tmp);
 			searchAns = root->searchUnique(tmp);
 			unite(candidates, searchAns);
 			continue;
 		}
 
-		if (tmp == "-") {
-			ss >> tmp;
+		if (tmp[0] == '-') {
+			tmp = tmp.substr(1, tmp.size() - 1);
+			transform(tmp.begin(), tmp.end(), tmp.begin(), [](char c) { return std::tolower(c); });
+			highlights.push_back(tmp);
 			searchAns = root->searchUnique(tmp);
 			substract(candidates, searchAns);
 			continue;
 		}
 
-		if (tmp == "filetype:txt") continue;
+		if (tmp[0] != '+') {
+			transform(tmp.begin(), tmp.end(), tmp.begin(), [](char c) { return std::tolower(c); });
+			if (isStopword(tmp, stopwords)) continue;
+		} else tmp = tmp.substr(1, tmp.size() - 1);
 
-		if (tmp == "AND") ss >> tmp;
+		if (tmp == "AND") continue;
 
+		transform(tmp.begin(), tmp.end(), tmp.begin(), [](char c) { return std::tolower(c); });
+		highlights.push_back(tmp);
 		searchAns = root->searchUnique(tmp);
-		intersect(candidates, searchAns);
+		if (firstTerm) unite(candidates, searchAns);
+		else intersect(candidates, searchAns);
+		firstTerm = false;
 	}
-	return candidates;
+	return make_pair(candidates, highlights);
 }

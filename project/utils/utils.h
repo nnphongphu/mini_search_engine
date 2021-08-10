@@ -12,8 +12,10 @@ enum ACTION { UP, DOWN, RIGHT, ENTER, BACK };
 
 std::string getTitle(std::string& fileName);
 void tokenize(std::string& text, std::vector<std::string>& res);
-std::vector<int> queryExecution(std::string& query, TrieNode*& root, std::vector<std::string> &files);
+std::pair<std::vector<int>, std::vector<std::string>> queryExecution(std::string& query, TrieNode*& root, std::vector<std::string> &files, std::vector<std::string>& stopwords);
 std::vector<int> getPos(std::string& fileName, std::string& key);
+bool isStopword(std::string& word, std::vector<std::string>& stopwords);
+std::vector<std::string> getSyno(std::string key);
 
 void ShowConsoleCursor(bool showFlag);
 void gotoxy(int x, int y);
