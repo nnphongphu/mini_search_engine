@@ -32,16 +32,17 @@ int main() {
 
 		History history;
 		query = history.history(query);
+
+		cout << query << endl;
 		
 		vector<int> list;
 		vector<string> highlights;
 		tie(list, highlights) = queryExecution(query, root, files, stopwords);
 
-		vector<string> listFile = getTopFive(files, highlights);
+		vector<string> listFile = getTopFive(files, highlights, list);
 		vector<pair<string, string>> fileList;
 
 		for (string f : listFile) {
-
 			string file = f;
 			string content;
 			getFileContent(file, content);

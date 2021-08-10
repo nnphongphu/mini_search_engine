@@ -26,11 +26,15 @@ public:
 				std::string str; std::getline(fin, str);
 				history[str] = 1;
 			}
-			for (auto s : list)
-				for (auto p : history) { // To see if s is substring of p
-					if (p.first == s || p.first == "" || p.first.find(s) == -1) continue;
+			for (auto s : list) {
+				std::string s1 = toUpper(s);
+				std::string s2 = s;
+				if ('a' <= s2[0] && s2[0] <= 'z') s2[0] = s2[0] - 'a' + 'A';
+				for (auto& p : history) { // To see if s is substring of p
+					if (p.first == "" || ((p.first == s || p.first.find(s) == -1) && (p.first == s1 || p.first.find(s1) == -1) && (p.first == s2 || p.first.find(s2) == -1))) continue;
 					else p.second++;
 				}
+			}
 
 			int i = 1;
 			for (auto p : history)

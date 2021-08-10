@@ -6,6 +6,7 @@
 #include "../api/api.h"
 #include "utils.h"
 #include <queue>
+#include "highlight.cpp"
 
 using namespace std;
 
@@ -20,6 +21,7 @@ void tokenize(string &text, vector<string> &res) {
 		}
 		else temp += tolower(c);
 	}
+	if (temp != "") res.push_back(temp);
 	return ;
 }
 
@@ -80,31 +82,43 @@ bool isStopword(string& word, vector<string>& stopwords) {
 	return binary_search(stopwords.begin(), stopwords.end(), word);
 }
 
-vector<string> getTopFive(vector<string> files, vector<string> words) {
+vector<string> getTopFive(vector<string> files, vector<string> words, vector<int> list) {
 	priority_queue<pair<int, string>, vector<pair<int, string>>, greater<pair<int, string>>> q;
 
-	for (string file : files) {
+	for (int id : list) {
 		int count = 0;
 		size_t pos = 0;
-		ifstream fin; fin.open("../data/" + file);
+		ifstream fin; fin.open("../data/" + files[id]);
 		if (!fin.is_open()) continue;
 		string para;
 		getline(fin, para, '|');
 		while (pos != string::npos) {
-			size_t MIN = pos; string key;
+			size_t MIN = pos + 1; string key; bool first = false;
 			for (string word : words) {
-				size_t temp = para.find(word, pos + 1);
-				if (MIN == pos || MIN > temp) MIN = temp, key = word;
+				// To find key
+				string tStr = word;
+				size_t pos_ = para.find(tStr, MIN);
+				if (pos_ < pos || !first) first = true, pos = pos_, key = tStr;
+
+				// To find upper key, i.e in -> IN
+				tStr = toUpper(word);
+				pos_ = para.find(tStr, MIN);
+				if (pos_ < pos) first = true, pos = pos_, key = tStr;
+
+				// To find key with first char that is upper char, i.e in -> In
+				tStr = word;
+				if ('a' <= tStr[0] && tStr[0] <= 'z') tStr[0] = tStr[0] - 'a' + 'A';
+				pos_ = para.find(tStr, MIN);
+				if (pos_ < pos) first = true, pos = pos_, key = tStr;
 			}
-			pos = MIN;
 			if (pos != string::npos && !((pos != 0 && ((para[pos - 1] >= '0' && para[pos - 1] <= '9') || (para[pos - 1] >= 'A' && para[pos - 1] <= 'Z') || (para[pos - 1] >= 'a' && para[pos - 1] <= 'z'))) ||
 				(pos + key.size() < para.size() && ((para[pos + key.size()] >= '0' && para[pos + key.size()] <= '9') || (para[pos + key.size()] >= 'A' && para[pos + key.size()] <= 'Z') || (para[pos + key.size()] >= 'a' && para[pos + key.size()] <= 'z'))))) count++;
 		}
 		if (!count) continue;
-		if (q.size() < 5) q.push(make_pair(count, file));
+		if (q.size() < 5) q.push(make_pair(count, files[id]));
 		else {
 			if (q.top().first < count) {
-				q.pop(); q.push(make_pair(count, file));
+				q.pop(); q.push(make_pair(count, files[id]));
 			}
 		}
 		fin.close();
@@ -116,4 +130,57 @@ vector<string> getTopFive(vector<string> files, vector<string> words) {
 		q.pop();
 	}
 	return res;
+}
+
+string toUpper(string s) {
+	for (int i = 0; i < s.size(); i++) {
+		char& c = s[i];
+		if ('a' <= c && c <= 'z') c = c - 'a' + 'A';
+	}
+	return s;
+};
+
+void highlight(string para, vector<string> keys) {
+	size_t pos = 0;
+	do {
+		bool first = false;
+		unsigned int temp = pos; string key = "";
+		for (auto key_ : keys) {
+			// To find key
+			string tStr = key_;
+			size_t pos_ = para.find(tStr, temp);
+			if (pos_ < pos || !first) first = true, pos = pos_, key = tStr;
+
+			// To find upper key, i.e in -> IN
+			tStr = toUpper(key_);
+			pos_ = para.find(tStr, temp);
+			if (pos_ < pos) first = true, pos = pos_, key = tStr;
+
+			// To find key with first char that is upper char, i.e in -> In
+			tStr = key_;
+			if ('a' <= tStr[0] && tStr[0] <= 'z') tStr[0] = tStr[0] - 'a' + 'A';
+			pos_ = para.find(tStr, temp);
+			if (pos_ < pos) first = true, pos = pos_, key = tStr;
+		}
+		if (pos != string::npos) {
+			if (pos != temp) { // Print from the previous key to new key
+				cout << para.substr(temp, pos - temp);
+			}
+			if ((pos != 0 && ((para[pos - 1] >= '0' && para[pos - 1] <= '9') || (para[pos - 1] >= 'A' && para[pos - 1] <= 'Z') || (para[pos - 1] >= 'a' && para[pos - 1] <= 'z'))) ||
+				(pos + key.size() < para.size() && ((para[pos + key.size()] >= '0' && para[pos + key.size()] <= '9') || (para[pos + key.size()] >= 'A' && para[pos + key.size()] <= 'Z') || (para[pos + key.size()] >= 'a' && para[pos + key.size()] <= 'z'))))
+			{	// Just in case the new key is in another word. Then print key.
+				cout << key;
+				pos += key.size();
+				continue;
+			}
+		}
+		else { // If there isn't any word. Print to the end of file and stop.
+			cout << para.substr(temp);
+			return;
+		}
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 176); // To highlight.
+		cout << key;
+		pos += key.size();
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+	} while (pos < para.size());
 }
