@@ -37,7 +37,7 @@ int main() {
 		vector<string> highlights;
 		tie(list, highlights) = queryExecution(query, root, files, stopwords);
 
-		vector<string> listFile = getTopFive(files, query);
+		vector<string> listFile = getTopFive(files, highlights);
 		vector<pair<string, string>> fileList;
 
 		for (string f : listFile) {
@@ -52,12 +52,17 @@ int main() {
 		
 		cout << "Below are top 5 results, please choose file you want to see (press BACK to find another word).\n";
 
-		int result = front_end(fileList, { 0, 6 });
+		int result = front_end(fileList, { 0, 8 });
 
 		system("CLS");
 		if (result == fileList.size()) continue;
 		else {
-			// highlight() parameter is a string which is file we print out, and a vector<string> which is list of keywords.
+			ifstream fin;
+			fin.open("../data/" + listFile[result]);
+			if (!fin.is_open()) continue;
+			string para; getline(fin, para, '|');
+			highlight(para, highlights);
+			system("pause");
 		}
 	}
 

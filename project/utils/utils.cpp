@@ -80,30 +80,34 @@ bool isStopword(string& word, vector<string>& stopwords) {
 	return binary_search(stopwords.begin(), stopwords.end(), word);
 }
 
-vector<string> getTopFive(vector<string> files, string query) {
+vector<string> getTopFive(vector<string> files, vector<string> words) {
 	priority_queue<pair<int, string>, vector<pair<int, string>>, greater<pair<int, string>>> q;
-
-	vector<string> words;
-	tokenize(query, words);
 
 	for (string file : files) {
 		int count = 0;
 		size_t pos = 0;
+		ifstream fin; fin.open("../data/" + file);
+		if (!fin.is_open()) continue;
+		string para;
+		getline(fin, para, '|');
 		while (pos != string::npos) {
-			size_t MIN = pos;
+			size_t MIN = pos; string key;
 			for (string word : words) {
-				size_t temp = file.find(word, pos);
-				if (MIN == temp || MIN > temp) MIN = temp;
+				size_t temp = para.find(word, pos + 1);
+				if (MIN == pos || MIN > temp) MIN = temp, key = word;
 			}
 			pos = MIN;
-			if (pos != string::npos) count++;
+			if (pos != string::npos && !((pos != 0 && ((para[pos - 1] >= '0' && para[pos - 1] <= '9') || (para[pos - 1] >= 'A' && para[pos - 1] <= 'Z') || (para[pos - 1] >= 'a' && para[pos - 1] <= 'z'))) ||
+				(pos + key.size() < para.size() && ((para[pos + key.size()] >= '0' && para[pos + key.size()] <= '9') || (para[pos + key.size()] >= 'A' && para[pos + key.size()] <= 'Z') || (para[pos + key.size()] >= 'a' && para[pos + key.size()] <= 'z'))))) count++;
 		}
+		if (!count) continue;
 		if (q.size() < 5) q.push(make_pair(count, file));
 		else {
 			if (q.top().first < count) {
 				q.pop(); q.push(make_pair(count, file));
 			}
 		}
+		fin.close();
 	}
 
 	vector<string> res;

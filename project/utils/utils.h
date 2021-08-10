@@ -10,7 +10,7 @@
 
 enum ACTION { UP, DOWN, RIGHT, ENTER, BACK };
 
-std::vector<std::string> getTopFive(std::vector<std::string> files, std::string query);
+std::vector<std::string> getTopFive(std::vector<std::string> files, std::vector<std::string> words);
 std::string getTitle(std::string& fileName);
 void tokenize(std::string& text, std::vector<std::string>& res);
 std::pair<std::vector<int>, std::vector<std::string>> queryExecution(std::string& query, TrieNode*& root, std::vector<std::string> &files, std::vector<std::string>& stopwords);

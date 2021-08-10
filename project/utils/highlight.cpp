@@ -35,7 +35,6 @@ void highlight(string para, vector<string> keys) {
 			if ('a' <= tStr[0] && tStr[0] <= 'z') tStr[0] = tStr[0] - 'a' + 'A';
 			pos_ = para.find(tStr, temp);
 			if (pos_ < pos) first = true, pos = pos_, key = tStr;
-
 		}
 		if (pos != string::npos) {
 			if (pos != temp) { // Print from the previous key to new key
