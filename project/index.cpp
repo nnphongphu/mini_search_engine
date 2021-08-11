@@ -44,6 +44,13 @@ int main() {
 		tie(list, highlights) = queryExecution(query, root, files, stopwords);
 
 		vector<string> listFile = getTopFive(files, highlights, list);
+
+		if (listFile.size() == 0) {
+			cout << "We can't find your query!\n";
+			system("pause");
+			continue;
+		}
+
 		vector<pair<string, string>> fileList;
 
 		for (string f : listFile) {
@@ -65,8 +72,12 @@ int main() {
 			ifstream fin;
 			fin.open("../data/" + listFile[result]);
 			if (!fin.is_open()) continue;
-			string para; getline(fin, para, '|');
+			string para; getline(fin, para, '|'); 
+			cout << "Press ENTER to see file!";
+			cin.ignore();
+			system("CLS");
 			highlight(para, highlights);
+			cout << endl;
 			system("pause");
 		}
 	}
