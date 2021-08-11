@@ -1,0 +1,70 @@
+The Lesson to Learn From Apple's Tool to Flag Child Sex Abuse
+
+As we all put more of our photos, documents and videos online, how much of that data really belongs to us anymore?
+
+That’s the question many are now pondering because of a change coming to iPhones. The debate has implications for online privacy and government surveillance and underlines how the storage of our digital data has changed over time, raising concerns about the ways we should conduct ourselves technologically.
+
+But I’m getting ahead of myself. Let me back up.
+
+The hubbub began last week when Apple introduced a software tool for iPhones to flag cases of child sex abuse. That seems good, right? The tool will be included in Apple’s next mobile software update this fall. It works by scanning an iPhone for code linked to a database of known child pornography when photos from the device are uploaded to iCloud, Apple’s online storage service. Once there are a certain number of matches, an Apple employee reviews the photos before informing the National Center for Missing and Exploited Children.
+
+But some cybersecurity experts countered that the content-flagging system was invasive and infringed on people’s privacy. They warned that Apple was creating a precedent that made it simple for surveillance-heavy countries like China to pass laws that could require the company to use the technology for other purposes, such as scanning for political images that are unfavorable to an authoritarian government.
+
+“They’ve said they don’t have any plans to do worse things with this technology, but this just feels, at this point, naïvely optimistic,” said Erica Portnoy, a technologist for the Electronic Frontier Foundation, the digital-rights nonprofit.
+
+In response to the backlash, Apple this week published a document explaining that the new system will not scan people’s private iPhone photo libraries. Also, the matching technology will cease to work if people disable their iPhone’s photo library from backing up images to iCloud, a company spokesman said.
+
+But no matter how this Apple episode plays out, it’s a reminder of just how much our digital data storage has changed. In the past, most of us stored our digital photos on our personal computer drives and on miniature USB sticks. Those belonged to us alone.
+
+Now we increasingly store our documents and other information in “the cloud,” where big companies like Apple, Google and Microsoft host the data on their server computers. In the process, those companies gained a lot more power over our information.
+
+That leads me to something I have said before: It’s wise to have an exit strategy for pulling your data from the cloud in the event that you want to leave. All it takes is a little forethought.
+
+Editors’ Picks
+
+Sod Poodles, Yard Goats and Trash Pandas, Oh My
+
+Exercise Vigorously for 4 Seconds. Repeat. Your Muscles May Thank You.
+
+The Lesson to Learn From Apple’s Tool to Flag Child Sex Abuse
+Continue reading the main story
+Over the last few years, I’ve embraced a hybrid approach of storing copies of my data online and offline so I can reap the benefits of the cloud but also retain independent ownership of my data. My efforts culminated in creating an online server at home, which is essentially a private cloud.
+
+Here’s how I did that, along with other approaches to a hybrid approach for storing your data.
+
+The Hybrid Backup
+Many of us have become accustomed to automatically backing up our data to Apple’s, Google’s and Microsoft’s online servers. These cloud services are convenient, and using them ensures your data is regularly backed up over the internet.
+
+But the best practice is a hybrid one: Store local copies on physical drives, too, according to Acronis, a data protection firm. It’s nice to have a local backup for when you lack an internet connection and need immediate access to a file.
+
+“It is shocking how few people follow a hybrid backup plan,” said Topher Tebow, a senior cybersecurity researcher at Acronis. “The whole point of backups is to ensure continuity of data, and that just isn’t something that can be guaranteed with a single solution in place.”
+
+To me, having local copies is important for self-reliance. What if I get tired of paying a company’s cloud subscription fees? What if the company’s servers are hacked? Or what if the company changes the product in an unappealing way?
+
+Without a local backup, you could feel locked into a company’s ecosystem; the longer you put one off, the more difficult it will become to pull your data out if you decide to leave. Yet only 17 percent of consumers take the hybrid approach, according to an Acronis survey last year.
+
+Fortunately, creating a local backup isn’t hard. The first step is to safely back up all of your digital information to another device.
+
+For iPhone photos, the simplest option is to back up your images to a computer. On a Mac, you would plug in your iPhone, open Apple’s Photos app and import all your photos. On Windows, you would use the Windows Photos app to do the same. And if you want to be extra thorough, you can make a backup of all your iPhone data with the Finder tool on Mac or the iTunes app on Windows.
+
+From there, you can create a backup of your computer data to an external drive that plugs into your computer. Apps like Apple’s Time Machine for Macs or File History for Windows will take care of that for you.
+
+Now that you have pulled your photos off your phone, you can decide what to do from there, like delete them from the cloud and port them to another cloud service such as Google Photos. Just remember not to become entirely dependent on the next cloud.
+
+The Extreme Setup: A Personal Cloud
+There’s also an extreme version of the hybrid backup, which is what I do but don’t recommend for everyone. It’s to set up a so-called network attached storage device, which is a miniature server that plugs into your internet router and gives you remote access to your data. It’s like having a private cloud in your home.
+
+Building a server is not for the faint of heart. For one, the software is not easy to use. For another, it’s not cheap. An internet-connected storage device, like the Synology DS220+, costs roughly $300, and hard drives must be bought separately.
+
+But I found it was worth the investment and time. I plug my phone into my Mac weekly, which backs up data to my computer, and when I’m asleep, the Mac backs up its data to my miniserver.
+
+It’s not as seamless as a company’s cloud storage but convenient enough — plus I was tired of paying for multiple subscriptions to cloud services.
+
+One Way Out
+Even if you take a hybrid storage approach, does that get you away from Apple’s new content-flagging tool?
+
+No, said Matthew D. Green, a cryptography professor at Johns Hopkins University who has been a vocal critic of Apple’s move. There is no true escape, he said, because part of the technology will reside on the phone hardware — and there’s nothing we can do to remove it.
+
+The cryptographer said that for the first time, he was contemplating switching to a phone that used Google’s Android software instead. That would involve pulling out all the photos that he had stored in Apple’s cloud.
+
+“It’s going to be so painful,” Mr. Green said. “I have 20,000 photos that go back to 2010. This is stuff I can’t bear the thought of losing.”
