@@ -20,9 +20,11 @@ int main() {
 
 	TrieNode* root = new TrieNode();
 	initTrie(files, root);
-	
+
 	vector<string> stopwords = getStopwords();
 	while (true) {
+		system("CLS");
+
 		cout << "--------- FINISHED INITIALIZING ---------\n";
 		cout << "--------- WELCOME TO OUR SEARCH ---------\n";
 
@@ -30,11 +32,13 @@ int main() {
 		string query;
 		getline(cin, query);
 
+		query = toLower(query);
+
 		History history;
 		query = history.history(query);
 
-		cout << query << endl;
-		
+		system("CLS");
+
 		vector<int> list;
 		vector<string> highlights;
 		tie(list, highlights) = queryExecution(query, root, files, stopwords);
@@ -48,12 +52,12 @@ int main() {
 			getFileContent(file, content);
 			string title = getTitle(file);
 
-			fileList.push_back({ file, title });
+			fileList.insert(fileList.begin(), { file, title });
 		}
-		
+
 		cout << "Below are top 5 results, please choose file you want to see (press BACK to find another word).\n";
 
-		int result = front_end(fileList, { 0, 8 });
+		int result = front_end(fileList, { 0,  3 });
 
 		system("CLS");
 		if (result == fileList.size()) continue;

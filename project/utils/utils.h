@@ -25,5 +25,6 @@ int front_end(std::vector<std::pair<std::string, std::string>> fileList, COORD p
 
 std::string toUpper(std::string s);
 void highlight(std::string para, std::vector<std::string> keys);
+std::string toLower(std::string s);
 
 #endif UTILS_H_HEADER

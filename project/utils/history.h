@@ -36,12 +36,10 @@ public:
 				}
 			}
 
-			int i = 1;
 			for (auto p : history)
-				if (p.second > 1) {
-					std::cout << i++ << ". " << p.first << std::endl;
-					res.push_back(p.first);
-				}
+				if (p.second > 1)
+					res.push_back(toLower(p.first));
+
 		}
 		else std::cout << "Can't open file history.txt\n", std::system("pause");
 		fin.close();
@@ -60,24 +58,48 @@ public:
 		if (choice) {
 			std::vector<std::string> list;
 			tokenize(s, list); // To token the string
-			
+
 			std::vector<std::string> res = getHistory(list);
-			
-			if (std::find(res.begin(), res.end(), s) != res.end()) { // To check if s existed in file history
-				std::cout << res.size() + 1 << ". " << s << std::endl;
-				res.push_back(s);
+
+			if (res.size() == 0) {
+				fin.open("history.txt");
+
+				bool isInFile = false;
+
+				if (fin.is_open()) {
+					while (!fin.eof()) { // To check if s existed in file.
+						std::string str; std::getline(fin, str);
+						if (str == s) {
+							isInFile = true;
+							break;
+						}
+					}
+				}
+				fin.close();
+				if (!isInFile) { // If it's in file, update file history.
+					fout.open("history.txt", std::ios::app);
+					fout << s << std::endl;
+					fout.close();
+				}
 			}
 
-			std::cin >> choice; std::cin.ignore();
-			if (choice > res.size() - 1) {
-				std::cout << "Invalid" << std::endl; choice = res.size();
-			}
-			s = res[(std::size_t)choice - 1];
+			res.push_back(s);
+
+			do {
+				system("CLS");
+				for (int i = 0; i < res.size(); i++)
+					std::cout << i + 1 << ". " << res[i] << std::endl;
+				std::cout << "OPTION: "; std::cin >> choice;
+				if (choice > res.size()) {
+					std::cout << "Please input your option <= " << res.size() << std::endl;
+					system("pause");
+				}
+			} while (choice > res.size());
+			s = res[choice - 1];
 		}
 		else {
 			fin.open("history.txt");
 
-			std::vector<std::string> res;
 			bool isInFile = false;
 
 			if (fin.is_open()) {
