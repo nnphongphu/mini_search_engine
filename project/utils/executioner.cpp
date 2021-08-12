@@ -103,7 +103,6 @@ vector<int> candidates;
 vector<string> highlights;
 bool useOr = true;
 while (ss >> tmp) {
-	cout << useOr << " " << tmp << "\n";
 	vector<int> searchAns;
 	if (tmp[0] == '"') {
 		if (tmp.back() == '"') {

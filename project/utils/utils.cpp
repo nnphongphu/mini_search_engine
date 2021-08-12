@@ -17,8 +17,8 @@ void tokenize(string &text, vector<string> &res) {
 	string tmp;
 	while (ss >> tmp) {
 		transform(tmp.begin(), tmp.end(), tmp.begin(), [](char c) { return std::tolower(c); });
-		while (tmp.size() && (tmp.back() < 'a' || tmp.back() > 'z')) tmp.pop_back();
-		while (tmp.size() && ((tmp[0] < 'a' || tmp[0] > 'z') && !(tmp[0] == '$' || tmp[0] == '#'))) tmp = tmp.substr(1);
+		while (tmp.size() && !((tmp.back() >= 'a' && tmp.back() <= 'z') || (tmp.back() >= '0' && tmp.back() <= '9'))) tmp.pop_back();
+		while (tmp.size() && (!((tmp[0] >= 'a' && tmp[0] <= 'z') || (tmp[0] >= '0' && tmp[0] <= '9')) && !(tmp[0] == '$' || tmp[0] == '#'))) tmp = tmp.substr(1);
 		res.push_back(tmp);
 	}
 	return ;
@@ -69,11 +69,6 @@ vector<int> getPos(string& fileName, string& key) {
 
 	vector<int> pos;
 	for (int i = 0; i < (int)token.size(); i++) {
-		/*if (fileName == "007.txt") {
-			if (i == 21) cout << token[i] << " " << token[i + 1] << "\n";
-			//cout << token[21] << " " << (token[21] == "she") << " " << (token[22] == "had") << "\n";
-			if (i < token.size() -1 && token[i] == "she" && token[i + 1] == "had") cout << i << "<--\n";
-		}*/
 		if (token[i] == key) pos.push_back(i);
 	}
 

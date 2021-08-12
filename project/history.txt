@@ -56,3 +56,7 @@ final
 #travel or #facebook
 #facebook or #new
 #travel
+$0..100
+$198
+$0..200
+curtains $150..200
