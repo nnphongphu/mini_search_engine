@@ -184,3 +184,10 @@ void highlight(string para, vector<string> keys) {
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
 	} while (pos < para.size());
 }
+
+std::string toLower(std::string s) {
+	for (auto& c : s) {
+		if ('A' <= c && c <= 'Z') c = c - 'A' + 'a';
+	}
+	return s;
+}

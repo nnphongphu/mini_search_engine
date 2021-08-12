@@ -52,7 +52,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="history.txt" />
     <Text Include="stopwords.txt" />
     <Text Include="synonym.txt" />
   </ItemGroup>

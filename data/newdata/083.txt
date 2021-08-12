@@ -1,0 +1,55 @@
+This Is a Terrible Time for Savers
+
+If you are saving money for the future, one way or another you had best be prepared to lose some of it.
+
+That is the implication of today’s upside-down world in the financial markets. The combination of high inflation, strong economic growth and very low interest rates has meant that “real” interest rates — what you can earn on your money after accounting for inflation — are lower than they have been in modern times.
+
+This outcome is a result of a glut of global savings and the Federal Reserve’s extraordinary efforts to bring the economy back to health. And it means the choice for a saver is stark. You can invest in safe assets and accept a high likelihood that you will get back less, in terms of purchasing power, than you put in. Or you can invest in risky assets in which you have a shot at positive returns but also a substantial risk of losing money should market sentiment turn negative.
+
+“For people who are risk averse, they have to get used to the worst of all possible worlds, which is watching their little pool of capital go down in real terms year after year after year,” said Sonal Desai, the chief investment officer of Franklin Templeton Fixed Income.
+
+Inflation outpacing interest rates is good news in certain circumstances: if you are able to borrow money at a fixed rate, for example, and use it to make an investment that will provide something of value over time, whether a house, farmland or equipment for a business.
+
+But consider the options if you are not in that position, and instead are saving money that you expect to need five years down the road — for the down payment on a house, or a child’s college expenses.
+
+You could keep the money in cash, such as through a bank deposit or money market mutual fund. Short-term interest rates are at zero or very close to it, depending on the specific place the money is parked, and Federal Reserve officials expect to keep rates there for perhaps another couple of years. Inflation has been at 4 percent to 5 percent over the last year, and many forecasters expect it to come down slowly.
+
+Or, you could buy a safe Treasury bond that matures in five years. The annual yield on that bond, as of Friday, was 0.77 percent. That means that if annual inflation is above that, the buying power of your savings will diminish over time. The highest-yielding federally insured bank certificates of deposit over that span offer only a little bit more, just over 1 percent.
+
+If you’re particularly nervous about rising prices, you could buy a Treasury Inflation Protected Security, a government-issued bond that is indexed to inflation. The five-year yield on TIPS? A negative 1.83 percent. That means that if inflation were 3 percent annually, your holding would return only 3 percent minus 1.83 percent, or 1.17 percent. In exchange for protection against the risk of high inflation, you must tolerate losing nearly 2 percent in purchasing power each year.
+
+Then again, you could take on a little more risk and buy, say, corporate bonds. But that adds the risk that the companies that issued the bonds will default — and it’s still only enough to roughly keep up with anticipated inflation. (An index of BBB-rated corporate bonds yielded only 2.19 percent late last week.)
+
+The stock market and other risky assets offer potentially higher returns, with some degree of protection from inflation. The corporate profits that are the basis for stock valuations are soaring, one reason major indexes hit record highs in recent days. But this comes with the omnipresent risk of a sell-off — tolerable for people investing for the long run but potentially problematic for those with shorter horizons.
+
+Inflation remains well below the double-digit heights it reached at times from the mid-1970s through early 1980s. But at that time, interest rates were much higher — and they mostly moved in tandem with inflation trends, unlike in recent months when consumer prices have spiked while bond yields fell.
+
+This extreme negative real interest rate environment leaves people whose job is to analyze and recommend bond investing strategies with few good options to advise.
+
+“It’s hard to even make an argument for fixed income at these levels,” said Rob Daly, the director of fixed income for Glenmede Investment Management. “It’s the old ‘pennies in front of a steamroller trade.’”
+
+That is to say: Someone who buys bonds with ultralow yields is collecting puny interest in exchange for taking the substantial risk that higher inflation or a surge in rates could more than wipe out gains (when interest rates rise, existing bonds fall in value).
+
+For those reasons, Mr. Daly recommends investors allocate more of their portfolios to cash. Yes, it will pay almost no interest, and so the saver will lose money in inflation-adjusted terms. But that money will be ready to invest in riskier, longer-term investments whenever conditions become more favorable.
+
+Similarly, Rick Rieder, the chief investment officer of global fixed income at BlackRock, the huge asset manager, recommends that investors focused on the medium term build a portfolio that combines stocks, which offer upside from rising corporate earnings, with cash, which offers safety even at the cost of negative real returns.
+
+“It’s surreal,” Mr. Rieder said. “This is one of those periods of time when the fundamentals are completely detached from reality. Where real rates are today makes no sense relative to the reality we live in.”
+
+The Fed, besides keeping its short-term interest rate target near zero, is buying $120 billion in securities every month through its quantitative easing program, and is only now starting to talk about plans to taper those purchases. That has the effect of putting an enormous buyer in the market that is bidding up the price of bonds, and thus pushing rates down.
+
+Fed officials believe the strategy of keeping easy monetary policy in place even as the economy is well into its recovery will help bring the American job market back to full health quickly. The aim is also to establish credibility that its 2 percent inflation target is symmetric, meaning that it will not panic when prices temporarily overshoot that target.
+
+Many of the people involved in market strategy are less than thrilled with this approach, and the consequences for would-be investors.
+
+“Nominal yields are low because of how much the Fed is buying,” said Ms. Desai of Franklin Templeton. “It’s ludicrous given where we are” with growth and inflation.
+
+At the same time, Americans have accumulated trillions in extra savings during the pandemic, money they are parking in all sorts of investments, which has been pushing asset prices upward and expected returns down. Arguably, the flip side of low expected returns on safe assets is stratospheric prices for real estate, meme stocks and cryptocurrencies.
+
+Globally, demographic trends tied to the aging of the enormous baby boom generation are causing a surge in savings. Gertjan Vlieghe, a top official with the Bank of England, has shown that the pattern of retirement savings evident in Britain and across advanced nations points to continued low interest rates.
+
+“We are only about two-thirds of the way through a multidecade demographic transition that is affecting interest rates,” Mr. Vlieghe said in a speech last month. “The key mechanism is not that older people have lower savings rates, but rather that, as people age, they hold higher levels of assets, in particular safe assets,”  then spend those savings down slowly when they hit retirement years.
+
+That helps explain why interest rates have been persistently low across major economies — in Europe, the United States and Japan in particular — for years, even at times when those economies have been performing relatively well.
+
+In other words, Fed policy and the unique economics of the pandemic are major factors in the extremely low rates of summer 2021. But it doesn’t help that these come in an era when so much of the world is eager to save — and that part won’t change anytime soon.
