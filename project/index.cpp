@@ -32,6 +32,7 @@ int main() {
 		string query;
 		getline(cin, query);
 
+		string tQuery = query;
 		query = toLower(query);
 
 		History history;
@@ -41,7 +42,7 @@ int main() {
 
 		vector<int> list;
 		vector<string> highlights;
-		tie(list, highlights) = queryExecution(query, root, files, stopwords);
+		tie(list, highlights) = queryExecution(tQuery, root, files, stopwords);
 
 		vector<string> listFile = getTopFive(files, highlights, list);
 

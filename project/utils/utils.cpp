@@ -6,22 +6,21 @@
 #include "../api/api.h"
 #include "utils.h"
 #include <queue>
+#include <algorithm>
 #include "highlight.cpp"
 
 using namespace std;
 
 void tokenize(string &text, vector<string> &res) {
-	string temp = "";
 	res.reserve(min(9000, (int)text.size()));
-
-	for (char c : text) {
-		if ((' ' <= c && c <= '/') || c == ':' || c == ';' || c == '?') {
-			res.emplace_back(temp);
-			temp = "";
-		}
-		else temp += tolower(c);
+	stringstream ss(text);
+	string tmp;
+	while (ss >> tmp) {
+		transform(tmp.begin(), tmp.end(), tmp.begin(), [](char c) { return std::tolower(c); });
+		while (tmp.size() && (tmp.back() < 'a' || tmp.back() > 'z')) tmp.pop_back();
+		while (tmp.size() && ((tmp[0] < 'a' || tmp[0] > 'z') && !(tmp[0] == '$' || tmp[0] == '#'))) tmp = tmp.substr(1);
+		res.push_back(tmp);
 	}
-	if (temp != "") res.push_back(temp);
 	return ;
 }
 
@@ -36,7 +35,7 @@ vector<string> getSyno(string key) {
 		while (!fin.eof()) {
 
 			getline(fin, line);
-
+			replace(line.begin(), line.end(), ',', ' ');
 			vector<string> temp;
 			tokenize(line, temp);
 
@@ -58,10 +57,7 @@ string getTitle(string& fileName) {
 		getline(ss, title);
 	}
 
-	if (title.size() > 200) {
-		return title.substr(0, title.find("."));
-	}
-	else return title;
+	return title;
 }
 
 vector<int> getPos(string& fileName, string& key) {
@@ -72,8 +68,14 @@ vector<int> getPos(string& fileName, string& key) {
 	tokenize(content, token);
 
 	vector<int> pos;
-	for (int i = 0; i < (int)token.size(); i++)
+	for (int i = 0; i < (int)token.size(); i++) {
+		/*if (fileName == "007.txt") {
+			if (i == 21) cout << token[i] << " " << token[i + 1] << "\n";
+			//cout << token[21] << " " << (token[21] == "she") << " " << (token[22] == "had") << "\n";
+			if (i < token.size() -1 && token[i] == "she" && token[i + 1] == "had") cout << i << "<--\n";
+		}*/
 		if (token[i] == key) pos.push_back(i);
+	}
 
 	return pos;
 }

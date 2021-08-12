@@ -8,3 +8,51 @@ love and war
 clothing
 cloth
 pirate
+love and america
+she had to start dialysis
+"she had to start dialysis"
+"she"
+"she had to start"
+"the world"
+"she had to"
+"start dialysis"
+"had to start"
+"had to start dialysis"
+"she had to take dialysis"
+"had to start dialysis
+"she had to tackle"
+"she had"
+ "she had"
+"mike kessler" or "mark fainaru"
+"mike kessler" or "she had to start dialysis"
+"she had to start dialysis" or "mike kessler"
+"she had to start dialysis" and "mike kessler"
+intitle:colm intitle:stenson
+intitle:colm or intitle:shoots
+intitle:colm
+intitle:stenson
+intitle:stenson or intitle:thailand
+"she had to start" filetype:txt
+mike kessler +and mark fainaru
+mike kessler and mark fainaru
+"over the next * of year"
+"over the next couple of years"
+"over the next * of years"
+"united * and europe"
+"concerns about * and security"
+one piece
+karaoke
+minor
+~final
+final
+~happy
+~joy
+~unique
+#information
+#tech
+#travel or #business
+#tech and #business
+#facebook or #travel
+#travel or #facebook
+#facebook or #new
+#travel

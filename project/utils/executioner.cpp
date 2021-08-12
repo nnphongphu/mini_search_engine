@@ -3,6 +3,7 @@
 #include <sstream>
 #include <utility>
 #include <vector>
+#include <algorithm>
 #include "../api/api.h"
 #include "../api/trie.h"
 #include "utils.h"
@@ -48,6 +49,7 @@ vector<int> getInTitleFile(string &required, vector<int> &candidates, vector<str
     if (find(words.begin(), words.end(), required) != words.end())
       ans.push_back(id);
   }
+
   return ans;
 }
 
@@ -80,109 +82,187 @@ void updateCandidatesAndPositionInExactQuery(vpv &position, vector<int> &candida
   candidates = updatedCandidates;
 }
 
-vector<int> queryExecution(string &query, TrieNode *&root, vector<string> &files) {
-  stringstream ss(query);
-  string tmp;
+bool isNum(string s) {
+	bool ans = true;
+	for (int i = 0; i < s.length(); ++i) {
+		if (s[i] >= '0' && s[i] <= '9')
+			continue;
+		else {
+			ans = false;
+			break;
+		}
+	}
+	return ans;
+}
 
-  vector<int> candidates;
-  bool firstTerm = true;
-  while (ss >> tmp) {
-    vector<int> searchAns;
-    if (tmp[0] == '"') {
-      if (tmp.back() == '"') {
-        tmp = tmp.substr(1, tmp.size() - 2);
-        if (tmp == "*") continue;
+pair<vector<int>, vector<string>> queryExecution(std::string& query, TrieNode*& root, std::vector<std::string>& files, std::vector<std::string>& stopwords) {
+stringstream ss(query);
+string tmp;
 
-        searchAns = root->searchUnique(tmp);
-        intersect(candidates, searchAns);
-        continue;
-      }
+vector<int> candidates;
+vector<string> highlights;
+bool useOr = true;
+while (ss >> tmp) {
+	cout << useOr << " " << tmp << "\n";
+	vector<int> searchAns;
+	if (tmp[0] == '"') {
+		if (tmp.back() == '"') {
+			tmp = tmp.substr(1, tmp.size()-2);
+			if (tmp == "*") continue;
 
-      tmp = tmp.substr(1, tmp.size() - 1);
-      while (tmp == "*") ss >> tmp;
-      if (tmp == "*\"") break;
+			transform(tmp.begin(), tmp.end(), tmp.begin(), [](char c) { return std::tolower(c); });
+			searchAns = root->searchUnique(tmp);
+			highlights.push_back(tmp);
+			if (useOr) unite(candidates, searchAns);
+			else intersect(candidates, searchAns);
+			useOr = false;
+			continue;
+		}
 
-      searchAns = root->searchUnique(tmp);
-      vector<pair<int, vector<int>>> position;
-      for (auto fileId : searchAns)
-        position.push_back(make_pair(fileId, getPos(files[fileId], tmp)));
+		tmp = tmp.substr(1);
+		while (tmp == "*") ss >> tmp;
+		if (tmp == "*\"") break;
+		transform(tmp.begin(), tmp.end(), tmp.begin(), [](char c) { return std::tolower(c); });
+		searchAns = root->searchUnique(tmp);
+		highlights.push_back(tmp);
+		vector< pair<int, vector<int>> > position;
+		for (auto fileId : searchAns)
+			position.push_back(make_pair(fileId, getPos(files[fileId], tmp)));
 
-      if (firstTerm) {
-        firstTerm = false;
-        unite(candidates, searchAns);
-      } else
-        intersect(candidates, searchAns);
+		vector<int> tCandidates;
+		unite(tCandidates, searchAns);
 
-      int delta = 1;
-      while (ss >> tmp) {
-        bool isFinalTerm = false;
+		int delta = 1;
+		while (ss >> tmp) {
+			transform(tmp.begin(), tmp.end(), tmp.begin(), [](char c) { return std::tolower(c); });
+			bool isFinalTerm = false;
 
-        if (tmp.back() == '"') {
-          tmp = tmp.substr(0, tmp.size() - 1);
-          isFinalTerm = true;
-        }
+			if (tmp.back() == '"') {
+				tmp = tmp.substr(0, tmp.size() - 1);
+				isFinalTerm = true;
+			}
 
-        if (tmp == "*")
-          delta += 1;
-        else {
-          searchAns = root->searchUnique(tmp);
-          vector<pair<int, vector<int>>> newPosition;
-          for (auto fileId : searchAns)
-            newPosition.push_back(make_pair(fileId, getPos(files[fileId], tmp)));
-          updateCandidatesAndPositionInExactQuery(position, candidates, newPosition, delta);
-          delta = 1;
-        }
+			if (tmp == "*") delta += 1;
+			else {
+				highlights.push_back(tmp);
+				searchAns = root->searchUnique(tmp);
+				vector< pair<int, vector<int>> > newPosition;
+				for (auto fileId : searchAns)
+					newPosition.push_back(make_pair(fileId, getPos(files[fileId], tmp)));
+				updateCandidatesAndPositionInExactQuery(position, tCandidates, newPosition, delta);
 
-        if (isFinalTerm) break;
-      }
+				delta = 1;
+			}
+			if (isFinalTerm) break;
+		}
 
-      continue;
-    }
+		if (useOr) unite(candidates, tCandidates);
+		else intersect(candidates, tCandidates);
+		useOr = false;
+		continue;
+	}
 
-    if (tmp.substr(0, 8) == "intitle:") {
-      string required = tmp.substr(8);
-      searchAns = root->searchUnique(required);
-      searchAns = getInTitleFile(required, searchAns, files);
-      if (firstTerm) {
-        firstTerm = false;
-        unite(candidates, searchAns);
-      } else
-        intersect(candidates, searchAns);
-      continue;
-    }
+	if (tmp.substr(0, 8) == "intitle:") {
+		string required = tmp.substr(8);
+		transform(required.begin(), required.end(), required.begin(), [](char c) { return std::tolower(c); });
+		highlights.push_back(required);
+		searchAns = root->searchUnique(required);
+		searchAns = getInTitleFile(required, searchAns, files);
+		if (useOr) {
+			useOr = false;
+			unite(candidates, searchAns);
+		}
+		else intersect(candidates, searchAns);
+		useOr = false;
+		continue;
+	}
 
-    if (tmp == "OR" || firstTerm) {
-      if (firstTerm == false) ss >> tmp;
-      firstTerm = false;
-      searchAns = root->searchUnique(tmp);
-      unite(candidates, searchAns);
-      continue;
-    }
+	if (tmp[0] == '~') {
+		tmp = tmp.substr(1, tmp.size() - 1);
+		transform(tmp.begin(), tmp.end(), tmp.begin(), [](char c) { return std::tolower(c); });
+		vector<string> synonyms = getSyno(tmp);
+		vector<int> searchAns = root->searchUnique(tmp);
+		highlights.push_back(tmp);
+		for (string term : synonyms) {
+			vector<int> subAns = root->searchUnique(tmp);
+			unite(searchAns, subAns);
+			highlights.push_back(term);
+		}
+		if (useOr) unite(candidates, searchAns);
+		else  intersect(candidates, searchAns);
 
-    if (tmp == "-") {
-      ss >> tmp;
-      searchAns = root->searchUnique(tmp);
-      substract(candidates, searchAns);
-      continue;
-    }
+		useOr = false;
+		continue;
+	}
 
-    if (tmp == "filetype:txt") continue;
+	if (tmp.substr(0, 9) == "filetype:") {
+		tmp = tmp.substr(9, tmp.size() - 9);
+		transform(tmp.begin(), tmp.end(), tmp.begin(), [](char c) { return std::tolower(c); });
+		if (tmp == "txt") continue;
+		else {
+			candidates.clear();
+			break;
+		}
+	}
 
-    if (tmp == "AND") ss >> tmp;
-    if (tmp[0] == '$')
-      string sub_tmp = tmp.substr(1, tmp.length() - 1);
-    bool isNum = true;
-    for (int i = 0; i < sub_tmp.length(); ++i) {
-      if (sub_tmp[i] >= '0' && sub_tmp[i] <= '9')
-        continue;
-      else {
-        isNum = false;
-        break;
-      }
-    }
-    if (isNum)
-      searchAns = root->searchUnique(tmp);
-    intersect(candidates, searchAns);
-  }
-  return candidates;
+	if (tmp == "OR") {
+		useOr = true;
+		continue;
+	}
+
+	if (tmp[0] == '-') {
+		tmp = tmp.substr(1, tmp.size() - 1);
+		transform(tmp.begin(), tmp.end(), tmp.begin(), [](char c) { return std::tolower(c); });
+		highlights.push_back(tmp);
+		searchAns = root->searchUnique(tmp);
+		substract(candidates, searchAns);
+		continue;
+	}
+
+	if (tmp[0] != '+') {
+		transform(tmp.begin(), tmp.end(), tmp.begin(), [](char c) { return std::tolower(c); });
+		if (isStopword(tmp, stopwords)) continue;
+	}
+	else tmp = tmp.substr(1, tmp.size() - 1);
+
+	if (tmp == "AND") continue;
+
+	transform(tmp.begin(), tmp.end(), tmp.begin(), [](char c) { return std::tolower(c); });
+	if (tmp[0] == '$') {
+		if (tmp.find("..") != std::string::npos) {
+			int found = tmp.find("..");
+			int l = stoi(tmp.substr(1, found));
+			int r = stoi(tmp.substr(found + 2));
+
+			vector<int> searchAns;
+			for (int i = l; i <= r; i++) {
+				string cur = "$" + to_string(i);
+				unite(searchAns, root->searchUnique(cur));
+				highlights.push_back(cur);
+			}
+
+			if (useOr) unite(candidates, searchAns);
+			else intersect(candidates, searchAns);
+
+			continue;
+		}
+
+		vector<int> searchAns;
+		if (isNum(tmp.substr(1))) {
+			searchAns = root->searchUnique(tmp);
+		    highlights.push_back(tmp);
+		    if (useOr) unite(candidates, searchAns);
+		    else intersect(candidates, searchAns);
+		}
+	}
+
+	highlights.push_back(tmp);
+	searchAns = root->searchUnique(tmp);
+	if (useOr) unite(candidates, searchAns);
+	else intersect(candidates, searchAns);
+
+	useOr = false;
+}
+
+return make_pair(candidates, highlights);
 }
