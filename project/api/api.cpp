@@ -60,7 +60,6 @@ void initTrie(vector<string>& files, TrieNode*& root) {
 
         fi.close();
 
-        if (fileIndex - 100 == 0) break;
         fileIndex += 1;
     }
 
