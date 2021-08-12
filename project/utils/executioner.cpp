@@ -224,7 +224,10 @@ while (ss >> tmp) {
 	}
 	else tmp = tmp.substr(1, tmp.size() - 1);
 
-	if (tmp == "AND") continue;
+	if (tmp == "AND") {
+		useOr = false;
+		continue;
+	}
 
 	transform(tmp.begin(), tmp.end(), tmp.begin(), [](char c) { return std::tolower(c); });
 	if (tmp[0] == '$') {
