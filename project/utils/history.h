@@ -15,6 +15,15 @@ private:
 	std::fstream f;
 
 public:
+	bool check(std::string key, std::string para) { // to check if str is in another word of para
+		std::size_t pos = para.find(key);
+		if (pos == std::string::npos) return false;
+		if ((pos > 0 && ((para[pos - 1] >= '0' && para[pos - 1] <= '9') || (para[pos - 1] >= 'A' && para[pos - 1] <= 'Z') || (para[pos - 1] >= 'a' && para[pos - 1] <= 'z'))) || 
+			(pos + key.size() < para.size() && ((para[pos + key.size()] >= '0' && para[pos + key.size()] <= '9') || (para[pos + key.size()] >= 'A' && para[pos + key.size()] <= 'Z') 
+			|| (para[pos + key.size()] >= 'a' && para[pos + key.size()] <= 'z')))) return false;
+		return true;
+	};
+
 	std::vector<std::string> getHistory(std::vector <std::string> list) {
 		fin.open("history.txt");
 
@@ -27,12 +36,14 @@ public:
 				history[str] = 1;
 			}
 			for (auto s : list) {
+				if (s == "and" || s == "or" || s == "intitle" || s == "*" || s == "+and" || s == "filetype") continue;
 				std::string s1 = toUpper(s);
 				std::string s2 = s;
 				if ('a' <= s2[0] && s2[0] <= 'z') s2[0] = s2[0] - 'a' + 'A';
 				for (auto& p : history) { // To see if s is substring of p
-					if (p.first == "" || ((p.first == s || p.first.find(s) == -1) && (p.first == s1 || p.first.find(s1) == -1) && (p.first == s2 || p.first.find(s2) == -1))) continue;
-					else p.second++;
+					if (p.first == "" || p.first == s || p.first == s1 || p.first == s2) continue;
+					if (p.first.find(s) == std::string::npos && p.first.find(s1) == std::string::npos && p.first.find(s2) == std::string::npos) continue;
+					if (check(s, p.first) || check(s1, p.first) || check(s2, p.first)) p.second++;
 				}
 			}
 
@@ -61,29 +72,26 @@ public:
 
 			std::vector<std::string> res = getHistory(list);
 
-			if (res.size() == 0) {
-				fin.open("history.txt");
+			fin.open("history.txt");
 
-				bool isInFile = false;
+			bool isInFile = false;
 
-				if (fin.is_open()) {
-					while (!fin.eof()) { // To check if s existed in file.
-						std::string str; std::getline(fin, str);
-						if (str == s) {
-							isInFile = true;
-							break;
-						}
+			if (fin.is_open()) {
+				while (!fin.eof()) { // To check if s existed in file.
+					std::string str; std::getline(fin, str);
+					if (str == s) {
+						isInFile = true;
+						break;
 					}
 				}
-				fin.close();
-				if (!isInFile) { // If it's in file, update file history.
-					fout.open("history.txt", std::ios::app);
-					fout << s << std::endl;
-					fout.close();
-				}
 			}
-
-			res.push_back(s);
+			fin.close();
+			if (!isInFile) { // If it's in file, update file history.
+				fout.open("history.txt", std::ios::app);
+				fout << s << std::endl;
+				fout.close();
+				res.push_back(s);
+			}
 
 			do {
 				system("CLS");

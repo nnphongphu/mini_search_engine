@@ -49,6 +49,7 @@ int main() {
 		if (listFile.size() == 0) {
 			cout << "We can't find your query!\n";
 			system("pause");
+			string temp; getline(cin, temp);
 			continue;
 		}
 
