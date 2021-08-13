@@ -80,7 +80,7 @@ bool isStopword(string& word, vector<string>& stopwords) {
 }
 
 vector<string> getTopFive(vector<string> files, vector<string> words, vector<int> list) {
-	priority_queue<pair<int, string>, vector<pair<int, string>>, greater<pair<int, string>>> q;
+	priority_queue<pair<int, string>, vector<pair<int, string>>> q;
 
 	for (int id : list) {
 		int count = 0;
@@ -89,8 +89,8 @@ vector<string> getTopFive(vector<string> files, vector<string> words, vector<int
 		if (!fin.is_open()) continue;
 		string para;
 		getline(fin, para, '|');
-		while (pos != string::npos) {
-			size_t MIN = pos + 1; string key; bool first = false;
+		while (pos < para.size()) {
+			size_t MIN = pos; string key; bool first = false;
 			for (string word : words) {
 				// To find key
 				string tStr = word;
@@ -108,8 +108,9 @@ vector<string> getTopFive(vector<string> files, vector<string> words, vector<int
 				pos_ = para.find(tStr, MIN);
 				if (pos_ < pos) first = true, pos = pos_, key = tStr;
 			}
-			if (pos != string::npos && !((pos != 0 && ((para[pos - 1] >= '0' && para[pos - 1] <= '9') || (para[pos - 1] >= 'A' && para[pos - 1] <= 'Z') || (para[pos - 1] >= 'a' && para[pos - 1] <= 'z'))) ||
+			if (pos < para.size() && !((pos != 0 && ((para[pos - 1] >= '0' && para[pos - 1] <= '9') || (para[pos - 1] >= 'A' && para[pos - 1] <= 'Z') || (para[pos - 1] >= 'a' && para[pos - 1] <= 'z'))) ||
 				(pos + key.size() < para.size() && ((para[pos + key.size()] >= '0' && para[pos + key.size()] <= '9') || (para[pos + key.size()] >= 'A' && para[pos + key.size()] <= 'Z') || (para[pos + key.size()] >= 'a' && para[pos + key.size()] <= 'z'))))) count++;
+			if (pos != string::npos) pos += key.size();
 		}
 		if (!count) continue;
 		if (q.size() < 5) q.push(make_pair(count, files[id]));
