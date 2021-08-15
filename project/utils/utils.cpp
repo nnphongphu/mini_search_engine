@@ -7,19 +7,22 @@
 #include "utils.h"
 #include <queue>
 #include <algorithm>
-#include "highlight.cpp"
 
 using namespace std;
+
+void normalize(string& token) {
+	transform(token.begin(), token.end(), token.begin(), [](char c) { return std::tolower(c); });
+	while (token.size() && !((token.back() >= 'a' && token.back() <= 'z') || (token.back() >= '0' && token.back() <= '9'))) token.pop_back();
+	while (token.size() && (!((token[0] >= 'a' && token[0] <= 'z') || (token[0] >= '0' && token[0] <= '9')) && !(token[0] == '$' || token[0] == '#'))) token = token.substr(1);
+}
 
 void tokenize(string &text, vector<string> &res) {
 	res.reserve(min(9000, (int)text.size()));
 	stringstream ss(text);
 	string tmp;
 	while (ss >> tmp) {
-		transform(tmp.begin(), tmp.end(), tmp.begin(), [](char c) { return std::tolower(c); });
-		while (tmp.size() && !((tmp.back() >= 'a' && tmp.back() <= 'z') || (tmp.back() >= '0' && tmp.back() <= '9'))) tmp.pop_back();
-		while (tmp.size() && (!((tmp[0] >= 'a' && tmp[0] <= 'z') || (tmp[0] >= '0' && tmp[0] <= '9')) && !(tmp[0] == '$' || tmp[0] == '#'))) tmp = tmp.substr(1);
-		res.push_back(tmp);
+		normalize(tmp);
+		if (tmp.size() > 1) res.push_back(tmp);
 	}
 	return ;
 }

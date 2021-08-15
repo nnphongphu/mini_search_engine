@@ -95,6 +95,16 @@ bool isNum(string s) {
 	return ans;
 }
 
+void filterFiletype(string& fileType, vector<int>& candidates, vector<string>& files) {
+	vector<int> newCandidates;
+	for (int candidate : candidates) {
+		int  found = files[candidate].find_last_of('.');
+		if (found+1 < files[candidate].size() && files[candidate].substr(found + 1) == fileType)
+			newCandidates.push_back(candidate);
+	}
+	candidates = newCandidates;
+}
+
 pair<vector<int>, vector<string>> queryExecution(std::string& query, TrieNode*& root, std::vector<std::string>& files, std::vector<std::string>& stopwords) {
 stringstream ss(query);
 string tmp;
@@ -197,11 +207,9 @@ while (ss >> tmp) {
 	if (tmp.substr(0, 9) == "filetype:") {
 		tmp = tmp.substr(9, tmp.size() - 9);
 		transform(tmp.begin(), tmp.end(), tmp.begin(), [](char c) { return std::tolower(c); });
-		if (tmp == "txt") continue;
-		else {
-			candidates.clear();
-			break;
-		}
+		filterFiletype(tmp, candidates, files);
+		useOr = false;
+		continue;
 	}
 
 	if (tmp == "OR") {

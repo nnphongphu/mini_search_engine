@@ -144,7 +144,6 @@
     <ClCompile Include="index.cpp" />
     <ClCompile Include="utils\executioner.cpp" />
     <ClCompile Include="utils\front_end.cpp" />
-    <ClCompile Include="utils\highlight.cpp" />
     <ClCompile Include="utils\utils.cpp" />
   </ItemGroup>
   <ItemGroup>

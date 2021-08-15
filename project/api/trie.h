@@ -36,7 +36,7 @@ public:
 			tmp = tmp->child[c];
 		}
 
-		tmp->list.push_back(fileIndex);
+		if (tmp->list.empty() || tmp->list.back() != fileIndex) tmp->list.push_back(fileIndex);
 	}
 
 	TrieNode* search(std::string &s) {
@@ -57,9 +57,7 @@ public:
 			tmp = tmp->child[c];
 		}
 
-		std::set<int> sans(tmp->list.begin(), tmp->list.end());
-		std::vector<int> ans(sans.begin(), sans.end());
-		return ans;
+		return tmp->list;
 	}
 
 };

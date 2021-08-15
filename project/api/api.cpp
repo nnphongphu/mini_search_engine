@@ -21,16 +21,18 @@
 using namespace std;
 namespace fs = std::filesystem;
 
+string SET = "../data/";
+
 void getFiles(vector<string> &files) {
-    ifstream fi("../data/___index.txt");
+    ifstream fi(SET + "___index.txt");
     string file;
     while (getline(fi, file))
         files.push_back(file);
     fi.close();
 }
 
-inline void getFileContent(string& file, string& content) {
-    ifstream fi("../data/" + file);
+void getFileContent(string& file, string& content) {
+    ifstream fi(SET + file);
     if (fi.is_open() == false) cout << "ERROR\n";
     fi.seekg(0, std::ios::end);
     content.reserve(fi.tellg());
@@ -44,23 +46,21 @@ void initTrie(vector<string>& files, TrieNode*& root) {
     ifstream fi;
     int fileIndex = 0;
     for (string file : files) {
-        fi.open("../data/" + file);
+        fi.open(SET + file);
 
-        if (fi) {
-            string content;
-            getFileContent(file, content);
-
-            vector<string> token;
-            tokenize(content, token);
-            
-            for (string tok : token) {
-                root->insert(tok, fileIndex);
+        if (fi.is_open()) {
+            string token;
+            while (fi >> token) {
+                normalize(token);
+                if (token.size() > 1) root->insert(token, fileIndex);
             }
+
         }
 
         fi.close();
 
         fileIndex += 1;
+        if (fileIndex % 1000 == 0) cout << fileIndex << "\n";
     }
 
     auto elapsed_time = std::chrono::steady_clock::now() - start;

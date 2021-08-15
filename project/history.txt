@@ -60,3 +60,7 @@ $0..100
 $198
 $0..200
 curtains $150..200
+0
+find
+"she had to start" filetype:out
+binary

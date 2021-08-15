@@ -10,6 +10,7 @@
 
 enum ACTION { UP, DOWN, RIGHT, ENTER, BACK };
 
+void normalize(std::string& token);
 std::vector<std::string> getTopFive(std::vector<std::string> files, std::vector<std::string> words, std::vector<int> list);
 std::string getTitle(std::string& fileName);
 void tokenize(std::string& text, std::vector<std::string>& res);
