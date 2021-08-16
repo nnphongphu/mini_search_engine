@@ -45,7 +45,12 @@ int front_end(std::vector<std::pair<std::string, std::string>> fileList, COORD p
     for (int i = 0; i < fileList.size(); i++) {
         gotoxy(position.X, position.Y + i + location[i]);
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (i == status) ? 176 : 15);
-        std::cout << i + 1 << ". Filename: " << fileList[i].first << " - Title: " << fileList[i].second;
+        std::cout 
+            << i + 1 
+            << ". Filename: " 
+            << fileList[i].first 
+            << " - Title: " 
+            << fileList[i].second;
     }
 
     while (true) {

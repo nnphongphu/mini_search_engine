@@ -30,15 +30,18 @@ void tokenize(string &text, vector<string> &res) {
 vector<string> getSyno(string key) {
 	vector<string> res;
 	string line;
+
 	ifstream fin;
 	fin.open("synonym.txt");
 
 	if (fin.is_open()) {
 		while (!fin.eof()) {
+
 			getline(fin, line);
 			replace(line.begin(), line.end(), ',', ' ');
 			vector<string> temp;
 			tokenize(line, temp);
+
 			if (find(temp.begin(), temp.end(), key) != temp.end()) return temp;
 		}
 	}
@@ -167,9 +170,7 @@ void highlight(string para, vector<string> keys) {
 			if (pos != temp) { // Print from the previous key to new key
 				cout << para.substr(temp, pos - temp);
 			}
-			if ((pos != 0 
-				&& ((para[pos - 1] >= '0' && para[pos - 1] <= '9') 
-					|| (para[pos - 1] >= 'A' && para[pos - 1] <= 'Z') || (para[pos - 1] >= 'a' && para[pos - 1] <= 'z'))) ||
+			if ((pos != 0 && ((para[pos - 1] >= '0' && para[pos - 1] <= '9') || (para[pos - 1] >= 'A' && para[pos - 1] <= 'Z') || (para[pos - 1] >= 'a' && para[pos - 1] <= 'z'))) ||
 				(pos + key.size() < para.size() && ((para[pos + key.size()] >= '0' && para[pos + key.size()] <= '9') || (para[pos + key.size()] >= 'A' && para[pos + key.size()] <= 'Z') || (para[pos + key.size()] >= 'a' && para[pos + key.size()] <= 'z'))))
 			{	// Just in case the new key is in another word. Then print key.
 				cout << key;
