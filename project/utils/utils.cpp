@@ -114,8 +114,10 @@ vector<string> getTopFive(vector<string> files, vector<string> words, vector<int
 				pos_ = para.find(tStr, MIN);
 				if (pos_ < pos) first = true, pos = pos_, key = tStr;
 			}
-			if (pos < para.size() && !((pos != 0 && ((para[pos - 1] >= '0' && para[pos - 1] <= '9') || (para[pos - 1] >= 'A' && para[pos - 1] <= 'Z') || (para[pos - 1] >= 'a' && para[pos - 1] <= 'z'))) ||
-				(pos + key.size() < para.size() && ((para[pos + key.size()] >= '0' && para[pos + key.size()] <= '9') || (para[pos + key.size()] >= 'A' && para[pos + key.size()] <= 'Z') || (para[pos + key.size()] >= 'a' && para[pos + key.size()] <= 'z'))))) count++;
+			if (pos < para.size() && !((pos != 0 && ((para[pos - 1] >= '0' && para[pos - 1] <= '9') 
+				|| (para[pos - 1] >= 'A' && para[pos - 1] <= 'Z') 
+				|| (para[pos - 1] >= 'a' && para[pos - 1] <= 'z'))) 
+				|| (pos + key.size() < para.size() && ((para[pos + key.size()] >= '0' && para[pos + key.size()] <= '9') || (para[pos + key.size()] >= 'A' && para[pos + key.size()] <= 'Z') || (para[pos + key.size()] >= 'a' && para[pos + key.size()] <= 'z'))))) count++;
 			if (pos != string::npos) pos += key.size();
 		}
 		if (!count) continue;
