@@ -60,7 +60,10 @@ string getTitle(string& fileName) {
 		getline(ss, title);
 	}
 
-	return title;
+	if (title.size() > 200) {
+		return title.substr(0, title.find("."));
+	}
+	else return title;
 }
 
 vector<int> getPos(string& fileName, string& key) {

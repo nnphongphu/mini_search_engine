@@ -3,6 +3,7 @@
 #include "api/trie.h"
 #include <windows.h>
 #include <utility>
+#include <chrono>
 #include "api/api.h"
 #include "utils/utils.h"
 #include "utils/history.h"
@@ -18,12 +19,22 @@ int main() {
 	vector<string> files;
 	getFiles(files);
 
+	auto start = std::chrono::steady_clock::now();
+
 	TrieNode* root = new TrieNode();
 	initTrie(files, root);
 
+	auto elapsed_time = std::chrono::steady_clock::now() - start;
+	std::cout << "Indexing in "
+		<< std::chrono::duration_cast<std::chrono::milliseconds>(elapsed_time)
+		.count()
+		<< " ms.\n";
+
 	vector<string> stopwords = getStopwords();
+	bool firstRender = true;
 	while (true) {
-		system("CLS");
+		if (firstRender == false) system("CLS");
+		else firstRender = false;
 
 		cout << "--------- FINISHED INITIALIZING ---------\n";
 		cout << "--------- WELCOME TO OUR SEARCH ---------\n";

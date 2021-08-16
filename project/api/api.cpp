@@ -40,9 +40,7 @@ void getFileContent(string& file, string& content) {
     content.assign(istreambuf_iterator<char>(fi), istreambuf_iterator<char>());
 }
 
-void initTrie(vector<string>& files, TrieNode*& root) {
-    auto start = std::chrono::steady_clock::now();
- 
+void initTrie(vector<string>& files, TrieNode*& root) { 
     ifstream fi;
     int fileIndex = 0;
     for (string file : files) {
@@ -60,14 +58,8 @@ void initTrie(vector<string>& files, TrieNode*& root) {
         fi.close();
 
         fileIndex += 1;
-        if (fileIndex % 1000 == 0) cout << fileIndex << "\n";
+        if (fileIndex % 1000 == 0) cout << fileIndex << " files indexed\n";
     }
-
-    auto elapsed_time = std::chrono::steady_clock::now() - start;
-    std::cout << "Read files in "
-        << std::chrono::duration_cast<std::chrono::milliseconds>(elapsed_time)
-        .count()
-        << " ms.\n";
     return;
 }
 
