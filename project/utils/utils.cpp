@@ -12,10 +12,7 @@ using namespace std;
 
 void normalize(string& token) {
 	transform(token.begin(), token.end(), token.begin(), [](char c) { return std::tolower(c); });
-	while (token.size() 
-		&& !((token.back() >= 'a' && token.back() <= 'z') 
-		|| (token.back() >= '0' && token.back() <= '9'))) 
-		token.pop_back();
+	while (token.size() && !((token.back() >= 'a' && token.back() <= 'z') || (token.back() >= '0' && token.back() <= '9'))) token.pop_back();
 	while (token.size() && (!((token[0] >= 'a' && token[0] <= 'z') || (token[0] >= '0' && token[0] <= '9')) && !(token[0] == '$' || token[0] == '#'))) token = token.substr(1);
 }
 
@@ -118,8 +115,7 @@ vector<string> getTopFive(vector<string> files, vector<string> words, vector<int
 				if (pos_ < pos) first = true, pos = pos_, key = tStr;
 			}
 			if (pos < para.size() && !((pos != 0 && ((para[pos - 1] >= '0' && para[pos - 1] <= '9') || (para[pos - 1] >= 'A' && para[pos - 1] <= 'Z') || (para[pos - 1] >= 'a' && para[pos - 1] <= 'z'))) ||
-				(pos + key.size() < para.size() && ((para[pos + key.size()] >= '0' && para[pos + key.size()] <= '9') || (para[pos + key.size()] >= 'A' && para[pos + key.size()] <= 'Z') || (para[pos + key.size()] >= 'a' && para[pos + key.size()] <= 'z'))))) 
-				count++;
+				(pos + key.size() < para.size() && ((para[pos + key.size()] >= '0' && para[pos + key.size()] <= '9') || (para[pos + key.size()] >= 'A' && para[pos + key.size()] <= 'Z') || (para[pos + key.size()] >= 'a' && para[pos + key.size()] <= 'z'))))) count++;
 			if (pos != string::npos) pos += key.size();
 		}
 		if (!count) continue;
