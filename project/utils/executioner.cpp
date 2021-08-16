@@ -229,6 +229,7 @@ while (ss >> tmp) {
 
 	if (tmp[0] != '+') {
 		transform(tmp.begin(), tmp.end(), tmp.begin(), [](char c) { return std::tolower(c); });
+		highlights.push_back(tmp);
 		if (isStopword(tmp, stopwords)) continue;
 	}
 	else tmp = tmp.substr(1, tmp.size() - 1);
