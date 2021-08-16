@@ -62,7 +62,12 @@ int front_end(std::vector<std::pair<std::string, std::string>> fileList, COORD p
             gotoxy(position.X, position.Y + status + location[status]);
 
             SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
-            std::cout << status + 1 << ". Filename: " << fileList[status].first << " - Title: " << fileList[status].second;
+            std::cout 
+                << status + 1 
+                << ". Filename: " 
+                << fileList[status].first 
+                << " - Title: " 
+                << fileList[status].second;
 
             if (action == UP) {
                 if (!status) status = (int)fileList.size() - 1;
@@ -89,6 +94,11 @@ int front_end(std::vector<std::pair<std::string, std::string>> fileList, COORD p
         gotoxy(position.X, position.Y + status + location[status]);
 
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 176);
-        std::cout << status + 1 << ". Filename: " << fileList[status].first << " - Title: " << fileList[status].second;
+        std::cout 
+            << status + 1 
+            << ". Filename: " 
+            << fileList[status].first 
+            << " - Title: " 
+            << fileList[status].second;
     }
 }
