@@ -64,3 +64,9 @@ curtains $150..200
 find
 "she had to start" filetype:out
 binary
+weather and time
+weather or time
+~new
+~novel
+new
+~unlike

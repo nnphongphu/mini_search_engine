@@ -4,6 +4,7 @@
 #include <utility>
 #include <vector>
 #include <algorithm>
+#include <windows.h>
 #include "../api/api.h"
 #include "../api/trie.h"
 #include "utils.h"
@@ -193,7 +194,7 @@ while (ss >> tmp) {
 		vector<int> searchAns = root->searchUnique(tmp);
 		highlights.push_back(tmp);
 		for (string term : synonyms) {
-			vector<int> subAns = root->searchUnique(tmp);
+			vector<int> subAns = root->searchUnique(term);
 			unite(searchAns, subAns);
 			highlights.push_back(term);
 		}
