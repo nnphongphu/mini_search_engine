@@ -25,7 +25,8 @@ int main() {
 	initTrie(files, root);
 
 	auto elapsed_time = std::chrono::steady_clock::now() - start;
-	std::cout << "Indexing in "
+	std::cout 
+		<< "Indexing in "
 		<< std::chrono::duration_cast<std::chrono::milliseconds>(elapsed_time)
 		.count()
 		<< " ms.\n";
