@@ -8,7 +8,9 @@
 void ShowConsoleCursor(bool showFlag)
 {
     HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
+
     CONSOLE_CURSOR_INFO     cursorInfo;
+
     GetConsoleCursorInfo(out, &cursorInfo);
     cursorInfo.bVisible = showFlag; // set the cursor visibility
     SetConsoleCursorInfo(out, &cursorInfo);
@@ -45,12 +47,7 @@ int front_end(std::vector<std::pair<std::string, std::string>> fileList, COORD p
     for (int i = 0; i < fileList.size(); i++) {
         gotoxy(position.X, position.Y + i + location[i]);
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (i == status) ? 176 : 15);
-        std::cout 
-            << i + 1 
-            << ". Filename: " 
-            << fileList[i].first 
-            << " - Title: " 
-            << fileList[i].second;
+        std::cout << i + 1 << ". Filename: " << fileList[i].first << " - Title: " << fileList[i].second;
     }
 
     while (true) {
@@ -62,12 +59,7 @@ int front_end(std::vector<std::pair<std::string, std::string>> fileList, COORD p
             gotoxy(position.X, position.Y + status + location[status]);
 
             SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
-            std::cout 
-                << status + 1 
-                << ". Filename: " 
-                << fileList[status].first 
-                << " - Title: " 
-                << fileList[status].second;
+            std::cout << status + 1 << ". Filename: " << fileList[status].first << " - Title: " << fileList[status].second;
 
             if (action == UP) {
                 if (!status) status = (int)fileList.size() - 1;
@@ -94,11 +86,6 @@ int front_end(std::vector<std::pair<std::string, std::string>> fileList, COORD p
         gotoxy(position.X, position.Y + status + location[status]);
 
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 176);
-        std::cout 
-            << status + 1 
-            << ". Filename: " 
-            << fileList[status].first 
-            << " - Title: " 
-            << fileList[status].second;
+        std::cout << status + 1 << ". Filename: " << fileList[status].first << " - Title: " << fileList[status].second;
     }
 }
