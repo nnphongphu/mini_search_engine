@@ -64,25 +64,30 @@ int main() {
 			fileList.insert(fileList.begin(), { file, title });
 		}
 
-		cout << "Below are top 5 results, please choose file you want to see (press BACK to find another word).\n";
+		int z = 13;
 
-		int result = front_end(fileList, { 0,  3 });
-
-		system("CLS");
-		if (result == fileList.size()) continue;
-		else {
-			ifstream fin;
-			fin.open("../data/" + listFile[result]);
-			if (!fin.is_open()) continue;
-			string para; getline(fin, para, '|'); 
-			cout << "Press ENTER to see file!";
-			cin.ignore();
+		do {
 			system("CLS");
-			highlight(para, highlights);
-			cout << endl;
-			system("pause");
-		}
-	}
+			cout << "Below are top 5 results, please choose file you want to see (press BACK to find another word).\n";
 
+			int result = front_end(fileList, { 0,  3 });
+
+			system("CLS");
+			if (result == fileList.size()) z = 13;
+			else {
+				ifstream fin;
+				fin.open("../data/" + listFile[result]);
+				if (!fin.is_open()) continue;
+				string para; getline(fin, para, '|');
+				cout << "Press ENTER to see file!";
+				cin.ignore();
+				system("CLS");
+				highlight(para, highlights);
+				cout << endl;
+				cout << "Press BACK to get back, ENTER to continue!";
+				z = _getch();
+			}
+		} while (key(z) == BACK);
+	}
 	return 0;
 }
