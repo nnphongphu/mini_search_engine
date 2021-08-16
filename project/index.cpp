@@ -46,7 +46,6 @@ int main() {
     string query;
     getline(cin, query);
 
-    string tQuery = query;
     query = toLower(query);
 
     History history;
@@ -56,7 +55,7 @@ int main() {
 
     vector<int> list;
     vector<string> highlights;
-    tie(list, highlights) = queryExecution(tQuery, root, files, stopwords);
+    tie(list, highlights) = queryExecution(query, root, files, stopwords);
 
     vector<string> listFile = getTopFive(files, highlights, list);
 
@@ -76,7 +75,7 @@ int main() {
       getFileContent(file, content);
       string title = getTitle(file);
 
-      fileList.insert(fileList.begin(), {file, title});
+      fileList.push_back( {file, title});
     }
 
     int z = 13;
