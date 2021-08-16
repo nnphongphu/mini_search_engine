@@ -213,7 +213,7 @@ while (ss >> tmp) {
 		continue;
 	}
 
-	if (tmp == "OR") {
+	if (tmp == "or") {
 		useOr = true;
 		continue;
 	}
@@ -233,7 +233,7 @@ while (ss >> tmp) {
 	}
 	else tmp = tmp.substr(1, tmp.size() - 1);
 
-	if (tmp == "AND") {
+	if (tmp == "and") {
 		useOr = false;
 		continue;
 	}
