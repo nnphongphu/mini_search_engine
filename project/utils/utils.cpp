@@ -12,7 +12,10 @@ using namespace std;
 
 void normalize(string& token) {
 	transform(token.begin(), token.end(), token.begin(), [](char c) { return std::tolower(c); });
-	while (token.size() && !((token.back() >= 'a' && token.back() <= 'z') || (token.back() >= '0' && token.back() <= '9'))) token.pop_back();
+	while (token.size() 
+		&& !((token.back() >= 'a' && token.back() <= 'z') 
+		|| (token.back() >= '0' && token.back() <= '9'))) 
+		token.pop_back();
 	while (token.size() && (!((token[0] >= 'a' && token[0] <= 'z') || (token[0] >= '0' && token[0] <= '9')) && !(token[0] == '$' || token[0] == '#'))) token = token.substr(1);
 }
 
