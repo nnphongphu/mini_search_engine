@@ -72,3 +72,5 @@ new
 ~unlike
 weather time
 world
+apple +and technology
+apple $2..200
